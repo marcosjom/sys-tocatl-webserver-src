@@ -1,0 +1,613 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 55;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2C06517127503F640030BA06 /* TWCfg.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C06516F27503F640030BA06 /* TWCfg.h */; };
+		2C06517227503F640030BA06 /* TWCfg.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C06517027503F640030BA06 /* TWCfg.c */; };
+		2C065180275045C50030BA06 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C06517F275045C50030BA06 /* main.c */; };
+		2C065186275046040030BA06 /* TWServer.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C065184275046040030BA06 /* TWServer.h */; };
+		2C065187275046040030BA06 /* TWServer.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C065185275046040030BA06 /* TWServer.c */; };
+		2C065188275056A40030BA06 /* libtocatl-core.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C08EF2D274D6595004251DE /* libtocatl-core.a */; };
+		2C06518A275056A90030BA06 /* libnbframework-osx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C065189275056A90030BA06 /* libnbframework-osx.a */; };
+		2C08EF32274D6C66004251DE /* libtocatl-core.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C08EF2D274D6595004251DE /* libtocatl-core.a */; };
+		2C12B99127529F6600263206 /* libnbframework-osx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C065189275056A90030BA06 /* libnbframework-osx.a */; };
+		2C12B9992752A17900263206 /* TWStatsTraffic.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C12B9972752A17900263206 /* TWStatsTraffic.h */; };
+		2C12B99A2752A17900263206 /* TWStatsTraffic.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C12B9982752A17900263206 /* TWStatsTraffic.c */; };
+		2C12B9A12752CB6E00263206 /* TWReport.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C12B99F2752CB6E00263206 /* TWReport.h */; };
+		2C12B9A22752CB6E00263206 /* TWReport.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C12B9A02752CB6E00263206 /* TWReport.c */; };
+		2C12B9A52752CB7F00263206 /* TWReportBldr.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C12B9A32752CB7F00263206 /* TWReportBldr.h */; };
+		2C12B9A62752CB7F00263206 /* TWReportBldr.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C12B9A42752CB7F00263206 /* TWReportBldr.c */; };
+		2C12B9AA2752E68F00263206 /* TWTimeframes.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C12B9A82752E68F00263206 /* TWTimeframes.h */; };
+		2C12B9AB2752E68F00263206 /* TWTimeframes.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C12B9A92752E68F00263206 /* TWTimeframes.c */; };
+		2C3CD63F28F7590200D27B5F /* TWCfgWeb.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C3CD63D28F7590200D27B5F /* TWCfgWeb.c */; };
+		2C3CD64028F7590200D27B5F /* TWCfgWeb.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C3CD63E28F7590200D27B5F /* TWCfgWeb.h */; };
+		2C4260602745835100963949 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C42605F2745835100963949 /* main.c */; };
+		2C6700C32751490A007F07E5 /* TWStrs.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C6700C12751490A007F07E5 /* TWStrs.h */; };
+		2C6700C42751490A007F07E5 /* TWStrs.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C6700C22751490A007F07E5 /* TWStrs.c */; };
+		2CD6159528F09DB30058F91E /* TWCfgContext.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CD6159328F09DB30058F91E /* TWCfgContext.c */; };
+		2CD6159628F09DB30058F91E /* TWCfgContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 2CD6159428F09DB30058F91E /* TWCfgContext.h */; };
+		2CD6159928F09F200058F91E /* TWContext.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CD6159728F09F200058F91E /* TWContext.c */; };
+		2CD6159A28F09F200058F91E /* TWContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 2CD6159828F09F200058F91E /* TWContext.h */; };
+		2CD64E9C27582DFE00117A53 /* TWCfgStats.h in Headers */ = {isa = PBXBuildFile; fileRef = 2CD64E9A27582DFE00117A53 /* TWCfgStats.h */; };
+		2CD64E9D27582DFE00117A53 /* TWCfgStats.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CD64E9B27582DFE00117A53 /* TWCfgStats.c */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		2C06517B275045C50030BA06 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+		2C42605A2745835100963949 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		2C06516F27503F640030BA06 /* TWCfg.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TWCfg.h; sourceTree = "<group>"; };
+		2C06517027503F640030BA06 /* TWCfg.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = TWCfg.c; sourceTree = "<group>"; };
+		2C065178275043A20030BA06 /* tocatl.cfg.server.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = tocatl.cfg.server.json; path = "../../../../sys-tocatl-webserver-res/tocatl.cfg.server.json"; sourceTree = SOURCE_ROOT; };
+		2C06517D275045C50030BA06 /* tocatl */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = tocatl; sourceTree = BUILT_PRODUCTS_DIR; };
+		2C06517F275045C50030BA06 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
+		2C065184275046040030BA06 /* TWServer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TWServer.h; sourceTree = "<group>"; };
+		2C065185275046040030BA06 /* TWServer.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = TWServer.c; sourceTree = "<group>"; };
+		2C065189275056A90030BA06 /* libnbframework-osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libnbframework-osx.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2C08EF2D274D6595004251DE /* libtocatl-core.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libtocatl-core.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2C12B9972752A17900263206 /* TWStatsTraffic.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TWStatsTraffic.h; sourceTree = "<group>"; };
+		2C12B9982752A17900263206 /* TWStatsTraffic.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = TWStatsTraffic.c; sourceTree = "<group>"; };
+		2C12B99F2752CB6E00263206 /* TWReport.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TWReport.h; sourceTree = "<group>"; };
+		2C12B9A02752CB6E00263206 /* TWReport.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = TWReport.c; sourceTree = "<group>"; };
+		2C12B9A32752CB7F00263206 /* TWReportBldr.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TWReportBldr.h; sourceTree = "<group>"; };
+		2C12B9A42752CB7F00263206 /* TWReportBldr.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = TWReportBldr.c; sourceTree = "<group>"; };
+		2C12B9A82752E68F00263206 /* TWTimeframes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TWTimeframes.h; sourceTree = "<group>"; };
+		2C12B9A92752E68F00263206 /* TWTimeframes.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = TWTimeframes.c; sourceTree = "<group>"; };
+		2C3CD63D28F7590200D27B5F /* TWCfgWeb.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = TWCfgWeb.c; sourceTree = "<group>"; };
+		2C3CD63E28F7590200D27B5F /* TWCfgWeb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TWCfgWeb.h; sourceTree = "<group>"; };
+		2C42605C2745835100963949 /* tocatl-test-old-clt */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "tocatl-test-old-clt"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2C42605F2745835100963949 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
+		2C6700C12751490A007F07E5 /* TWStrs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TWStrs.h; sourceTree = "<group>"; };
+		2C6700C22751490A007F07E5 /* TWStrs.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = TWStrs.c; sourceTree = "<group>"; };
+		2C6700C527514A3C007F07E5 /* TWStrTemplate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TWStrTemplate.h; sourceTree = "<group>"; };
+		2CD6159328F09DB30058F91E /* TWCfgContext.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = TWCfgContext.c; sourceTree = "<group>"; };
+		2CD6159428F09DB30058F91E /* TWCfgContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TWCfgContext.h; sourceTree = "<group>"; };
+		2CD6159728F09F200058F91E /* TWContext.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = TWContext.c; sourceTree = "<group>"; };
+		2CD6159828F09F200058F91E /* TWContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TWContext.h; sourceTree = "<group>"; };
+		2CD64E9A27582DFE00117A53 /* TWCfgStats.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TWCfgStats.h; sourceTree = "<group>"; };
+		2CD64E9B27582DFE00117A53 /* TWCfgStats.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = TWCfgStats.c; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		2C06517A275045C50030BA06 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2C06518A275056A90030BA06 /* libnbframework-osx.a in Frameworks */,
+				2C065188275056A40030BA06 /* libtocatl-core.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2C08EF2B274D6595004251DE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2C4260592745835100963949 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2C08EF32274D6C66004251DE /* libtocatl-core.a in Frameworks */,
+				2C12B99127529F6600263206 /* libnbframework-osx.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		2C06515F275039FD0030BA06 /* core */ = {
+			isa = PBXGroup;
+			children = (
+				2C12B9AC2753069700263206 /* base */,
+				2C06516027503AEF0030BA06 /* cfg */,
+				2C12B9922752A04700263206 /* stats */,
+				2C12B9A72752E61300263206 /* reports */,
+				2CD6159828F09F200058F91E /* TWContext.h */,
+				2CD6159728F09F200058F91E /* TWContext.c */,
+				2C065184275046040030BA06 /* TWServer.h */,
+				2C065185275046040030BA06 /* TWServer.c */,
+			);
+			path = core;
+			sourceTree = "<group>";
+		};
+		2C06516027503AEF0030BA06 /* cfg */ = {
+			isa = PBXGroup;
+			children = (
+				2CD6159428F09DB30058F91E /* TWCfgContext.h */,
+				2CD6159328F09DB30058F91E /* TWCfgContext.c */,
+				2CD64E9A27582DFE00117A53 /* TWCfgStats.h */,
+				2CD64E9B27582DFE00117A53 /* TWCfgStats.c */,
+				2C3CD63E28F7590200D27B5F /* TWCfgWeb.h */,
+				2C3CD63D28F7590200D27B5F /* TWCfgWeb.c */,
+				2C06516F27503F640030BA06 /* TWCfg.h */,
+				2C06517027503F640030BA06 /* TWCfg.c */,
+			);
+			path = cfg;
+			sourceTree = "<group>";
+		};
+		2C0651772750438A0030BA06 /* Package */ = {
+			isa = PBXGroup;
+			children = (
+				2C065178275043A20030BA06 /* tocatl.cfg.server.json */,
+			);
+			name = Package;
+			path = "../../../../sys-tocatl-webserver-res";
+			sourceTree = SOURCE_ROOT;
+		};
+		2C08EF25274D64E4004251DE /* src */ = {
+			isa = PBXGroup;
+			children = (
+				2C06515F275039FD0030BA06 /* core */,
+				2C6700BF27513B29007F07E5 /* tocatl */,
+				2C6700BE27513B18007F07E5 /* test */,
+			);
+			name = src;
+			path = ../../../src;
+			sourceTree = SOURCE_ROOT;
+		};
+		2C12B9922752A04700263206 /* stats */ = {
+			isa = PBXGroup;
+			children = (
+				2C12B9972752A17900263206 /* TWStatsTraffic.h */,
+				2C12B9982752A17900263206 /* TWStatsTraffic.c */,
+			);
+			path = stats;
+			sourceTree = "<group>";
+		};
+		2C12B9A72752E61300263206 /* reports */ = {
+			isa = PBXGroup;
+			children = (
+				2C12B99F2752CB6E00263206 /* TWReport.h */,
+				2C12B9A02752CB6E00263206 /* TWReport.c */,
+				2C12B9A32752CB7F00263206 /* TWReportBldr.h */,
+				2C12B9A42752CB7F00263206 /* TWReportBldr.c */,
+			);
+			path = reports;
+			sourceTree = "<group>";
+		};
+		2C12B9AC2753069700263206 /* base */ = {
+			isa = PBXGroup;
+			children = (
+				2C6700C527514A3C007F07E5 /* TWStrTemplate.h */,
+				2C6700C12751490A007F07E5 /* TWStrs.h */,
+				2C6700C22751490A007F07E5 /* TWStrs.c */,
+				2C12B9A82752E68F00263206 /* TWTimeframes.h */,
+				2C12B9A92752E68F00263206 /* TWTimeframes.c */,
+			);
+			path = base;
+			sourceTree = "<group>";
+		};
+		2C4260532745835100963949 = {
+			isa = PBXGroup;
+			children = (
+				2C0651772750438A0030BA06 /* Package */,
+				2C08EF25274D64E4004251DE /* src */,
+				2C42605D2745835100963949 /* Products */,
+				2C4260662745851A00963949 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		2C42605D2745835100963949 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2C42605C2745835100963949 /* tocatl-test-old-clt */,
+				2C08EF2D274D6595004251DE /* libtocatl-core.a */,
+				2C06517D275045C50030BA06 /* tocatl */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2C4260662745851A00963949 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2C065189275056A90030BA06 /* libnbframework-osx.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		2C6700BE27513B18007F07E5 /* test */ = {
+			isa = PBXGroup;
+			children = (
+				2C42605F2745835100963949 /* main.c */,
+			);
+			path = test;
+			sourceTree = "<group>";
+		};
+		2C6700BF27513B29007F07E5 /* tocatl */ = {
+			isa = PBXGroup;
+			children = (
+				2C06517F275045C50030BA06 /* main.c */,
+			);
+			path = tocatl;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		2C08EF29274D6595004251DE /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2C3CD64028F7590200D27B5F /* TWCfgWeb.h in Headers */,
+				2CD6159628F09DB30058F91E /* TWCfgContext.h in Headers */,
+				2C12B9A52752CB7F00263206 /* TWReportBldr.h in Headers */,
+				2C06517127503F640030BA06 /* TWCfg.h in Headers */,
+				2CD6159A28F09F200058F91E /* TWContext.h in Headers */,
+				2C12B9992752A17900263206 /* TWStatsTraffic.h in Headers */,
+				2CD64E9C27582DFE00117A53 /* TWCfgStats.h in Headers */,
+				2C12B9A12752CB6E00263206 /* TWReport.h in Headers */,
+				2C065186275046040030BA06 /* TWServer.h in Headers */,
+				2C6700C32751490A007F07E5 /* TWStrs.h in Headers */,
+				2C12B9AA2752E68F00263206 /* TWTimeframes.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		2C06517C275045C50030BA06 /* tocatl */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2C065181275045C50030BA06 /* Build configuration list for PBXNativeTarget "tocatl" */;
+			buildPhases = (
+				2C065179275045C50030BA06 /* Sources */,
+				2C06517A275045C50030BA06 /* Frameworks */,
+				2C06517B275045C50030BA06 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = tocatl;
+			productName = "tocatl-srvcache";
+			productReference = 2C06517D275045C50030BA06 /* tocatl */;
+			productType = "com.apple.product-type.tool";
+		};
+		2C08EF2C274D6595004251DE /* tocatl-core */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2C08EF2E274D6595004251DE /* Build configuration list for PBXNativeTarget "tocatl-core" */;
+			buildPhases = (
+				2C08EF29274D6595004251DE /* Headers */,
+				2C08EF2A274D6595004251DE /* Sources */,
+				2C08EF2B274D6595004251DE /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "tocatl-core";
+			productName = "tocatl-core";
+			productReference = 2C08EF2D274D6595004251DE /* libtocatl-core.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		2C42605B2745835100963949 /* tocatl-test-old-clt */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2C4260632745835100963949 /* Build configuration list for PBXNativeTarget "tocatl-test-old-clt" */;
+			buildPhases = (
+				2C4260582745835100963949 /* Sources */,
+				2C4260592745835100963949 /* Frameworks */,
+				2C42605A2745835100963949 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "tocatl-test-old-clt";
+			productName = tocatl;
+			productReference = 2C42605C2745835100963949 /* tocatl-test-old-clt */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		2C4260542745835100963949 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastUpgradeCheck = 1310;
+				TargetAttributes = {
+					2C06517C275045C50030BA06 = {
+						CreatedOnToolsVersion = 13.1;
+					};
+					2C08EF2C274D6595004251DE = {
+						CreatedOnToolsVersion = 13.1;
+					};
+					2C42605B2745835100963949 = {
+						CreatedOnToolsVersion = 13.1;
+					};
+				};
+			};
+			buildConfigurationList = 2C4260572745835100963949 /* Build configuration list for PBXProject "tocatl" */;
+			compatibilityVersion = "Xcode 13.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 2C4260532745835100963949;
+			productRefGroup = 2C42605D2745835100963949 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				2C42605B2745835100963949 /* tocatl-test-old-clt */,
+				2C08EF2C274D6595004251DE /* tocatl-core */,
+				2C06517C275045C50030BA06 /* tocatl */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		2C065179275045C50030BA06 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2C065180275045C50030BA06 /* main.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2C08EF2A274D6595004251DE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2C065187275046040030BA06 /* TWServer.c in Sources */,
+				2C12B99A2752A17900263206 /* TWStatsTraffic.c in Sources */,
+				2CD6159928F09F200058F91E /* TWContext.c in Sources */,
+				2CD64E9D27582DFE00117A53 /* TWCfgStats.c in Sources */,
+				2C12B9A22752CB6E00263206 /* TWReport.c in Sources */,
+				2C12B9AB2752E68F00263206 /* TWTimeframes.c in Sources */,
+				2C6700C42751490A007F07E5 /* TWStrs.c in Sources */,
+				2C06517227503F640030BA06 /* TWCfg.c in Sources */,
+				2C3CD63F28F7590200D27B5F /* TWCfgWeb.c in Sources */,
+				2C12B9A62752CB7F00263206 /* TWReportBldr.c in Sources */,
+				2CD6159528F09DB30058F91E /* TWCfgContext.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2C4260582745835100963949 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2C4260602745835100963949 /* main.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		2C065182275045C50030BA06 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		2C065183275045C50030BA06 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		2C08EF2F274D6595004251DE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				EXECUTABLE_PREFIX = lib;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		2C08EF30274D6595004251DE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				EXECUTABLE_PREFIX = lib;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		2C4260612745835100963949 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 11.6;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				USER_HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/../../../../../../CltNicaraguaBinary/sys-nbframework/lib-nbframework-src/include",
+					"$(SRCROOT)/../../../src",
+				);
+			};
+			name = Debug;
+		};
+		2C4260622745835100963949 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 11.6;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				USER_HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/../../../../../../CltNicaraguaBinary/sys-nbframework/lib-nbframework-src/include",
+					"$(SRCROOT)/../../../src",
+				);
+			};
+			name = Release;
+		};
+		2C4260642745835100963949 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		2C4260652745835100963949 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2C065181275045C50030BA06 /* Build configuration list for PBXNativeTarget "tocatl" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2C065182275045C50030BA06 /* Debug */,
+				2C065183275045C50030BA06 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2C08EF2E274D6595004251DE /* Build configuration list for PBXNativeTarget "tocatl-core" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2C08EF2F274D6595004251DE /* Debug */,
+				2C08EF30274D6595004251DE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2C4260572745835100963949 /* Build configuration list for PBXProject "tocatl" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2C4260612745835100963949 /* Debug */,
+				2C4260622745835100963949 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2C4260632745835100963949 /* Build configuration list for PBXNativeTarget "tocatl-test-old-clt" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2C4260642745835100963949 /* Debug */,
+				2C4260652745835100963949 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 2C4260542745835100963949 /* Project object */;
+}

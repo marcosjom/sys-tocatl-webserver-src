@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="source">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="source\base">
+      <UniqueIdentifier>{c2dc796b-8e0f-42ed-a3f1-3d7b107edefe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\cfg">
+      <UniqueIdentifier>{0913aca3-037a-4004-ac87-ffcd445cc611}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\db">
+      <UniqueIdentifier>{d68c1833-3bf7-4191-a39d-a8834ef84a80}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\stats">
+      <UniqueIdentifier>{97cfcf90-730c-4d32-aa04-38efdc333e16}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\reports">
+      <UniqueIdentifier>{0205d322-c112-48c2-b363-ddba12ab3f7f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\src\core\TWContext.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\core\TWServer.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\core\base\TWStrs.c">
+      <Filter>source\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\core\base\TWTimeframes.c">
+      <Filter>source\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\core\cfg\TWCfg.c">
+      <Filter>source\cfg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\core\cfg\TWCfgContext.c">
+      <Filter>source\cfg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\core\cfg\TWCfgStats.c">
+      <Filter>source\cfg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\core\cfg\TWCfgWeb.c">
+      <Filter>source\cfg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\core\reports\TWReport.c">
+      <Filter>source\reports</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\core\reports\TWReportBldr.c">
+      <Filter>source\reports</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\core\stats\TWStatsTraffic.c">
+      <Filter>source\stats</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\src\core\TWContext.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\core\TWServer.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\core\base\TWStrs.h">
+      <Filter>source\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\core\base\TWStrTemplate.h">
+      <Filter>source\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\core\base\TWTimeframes.h">
+      <Filter>source\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\core\cfg\TWCfg.h">
+      <Filter>source\cfg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\core\cfg\TWCfgContext.h">
+      <Filter>source\cfg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\core\cfg\TWCfgStats.h">
+      <Filter>source\cfg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\core\cfg\TWCfgWeb.h">
+      <Filter>source\cfg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\core\reports\TWReport.h">
+      <Filter>source\reports</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\core\reports\TWReportBldr.h">
+      <Filter>source\reports</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\core\stats\TWStatsTraffic.h">
+      <Filter>source\stats</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
