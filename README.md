@@ -1,11 +1,8 @@
 # Moved to Github
 
-This repository was moved from another service to Github.
+This repository was moved to Github. My original repository has ~4 years of activity from 2021-12-22 to 2025-05-03:
 
-The original repository has activity:
-
-- from  2021-12-22
-- up to 2025-05-03
+https://bitbucket.org/marcosjom/sys-tocatl-webserver-src/
 
 # sys-tocatl-webserver-src
 
