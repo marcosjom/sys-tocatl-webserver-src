@@ -5,7 +5,7 @@
       location = "container:"
       name = "Dependencies">
       <FileRef
-         location = "group:../../../../../CltNicaraguaBinary/sys-nbframework/lib-nbframework-src/projects/xcode/nbframework/nbframework.xcodeproj">
+         location = "group:../../../../sys-nbframework/sys-nbframework-src/projects/xcode/nbframework/nbframework.xcodeproj">
       </FileRef>
    </Group>
    <FileRef

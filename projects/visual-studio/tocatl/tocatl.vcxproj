@@ -22,7 +22,7 @@
     <ClCompile Include="..\..\..\src\tocatl\main.c" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\..\CltNicaraguaBinary\sys-nbframework\lib-nbframework-src\projects\visual-studio\nbframework\nbframework.vcxproj">
+    <ProjectReference Include="..\..\..\..\..\sys-nbframework\sys-nbframework-src\projects\visual-studio\nbframework\nbframework.vcxproj">
       <Project>{7fddbc68-b369-4346-ba6e-7c1ce2ff732f}</Project>
     </ProjectReference>
     <ProjectReference Include="..\tocatl-core\tocatl-core.vcxproj">
@@ -103,7 +103,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\src;$(ProjectDir)..\..\..\..\..\..\CltNicaraguaBinary\sys-nbframework\lib-nbframework-src\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\src;$(ProjectDir)..\..\..\..\..\sys-nbframework\sys-nbframework-src\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -118,7 +118,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\src;$(ProjectDir)..\..\..\..\..\..\CltNicaraguaBinary\sys-nbframework\lib-nbframework-src\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\src;$(ProjectDir)..\..\..\..\..\sys-nbframework\sys-nbframework-src\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -133,7 +133,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\src;$(ProjectDir)..\..\..\..\..\..\CltNicaraguaBinary\sys-nbframework\lib-nbframework-src\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\src;$(ProjectDir)..\..\..\..\..\sys-nbframework\sys-nbframework-src\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -148,7 +148,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\src;$(ProjectDir)..\..\..\..\..\..\CltNicaraguaBinary\sys-nbframework\lib-nbframework-src\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\src;$(ProjectDir)..\..\..\..\..\sys-nbframework\sys-nbframework-src\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

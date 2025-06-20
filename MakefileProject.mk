@@ -13,7 +13,7 @@ NB_PROJECT_CXXFLAGS         := -fPIC -std=c++11
 
 NB_PROJECT_INCLUDES         := \
    src \
-   ../../../CltNicaraguaBinary/sys-nbframework/lib-nbframework-src/include \
+   ../../sys-nbframework/sys-nbframework-src/include \
 
 #-------------------------
 # TARGET
