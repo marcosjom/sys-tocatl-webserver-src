@@ -4,13 +4,15 @@ This repository was moved to Github. My original repository has ~4 years of acti
 
 # sys-tocatl-webserver-src
 
-Small, portable and multi-platform http/https webserver.
+Small, portable and multi-platform webserver.
 
-Created by Marcos Ortega; built on top of sys-nbframework-src. In use serving https://mortegam.com/
+Created by [Marcos Ortega](https://mortegam.com/), in use serving https://mortegam.com/
+
+Built on top of [sys-nbframework-src](https://github.com/marcosjom/sys-nbframework-src), this project serves as demostration of how to implement your app's API webserver when you build an app or service with [sys-nbframework-src](https://github.com/marcosjom/sys-nbframework-src).
 
 # Features
 
-- io-event driven implementation, one or few threads can handle many requests with concurrency.
+- io-events driven implementation, one or few threads can handle many requests with concurrency.
 - SSL (HTTPS) support.
 - muti-domains support.
 - redirection support.
@@ -65,17 +67,19 @@ Parameters:
 
     -msRunAndQuit num      : millisecs after starting to automatically activate stop-flag and exit, for debug and test
     -msSleepAfterRun num   : millisecs to sleep before exiting the main() funcion, for memory leak detection
-    -msSleepBeforeRun num  : millisecs probability to trigger a simulated network timeout, for cleanup code test
+    -msSleepBeforeRun num  : millisecs to sleep before running, for memory leak detection delay
 
 Examples:
 
-    `./tocatl -c myfile.json`
-    `./tocatl -runServer -c myfile.json`
+```
+./tocatl -c myfile.json
+./tocatl -c myfile.json -runServer
+```
     
-    The first command loads and verifies the configuration file without running the server.
-    The second command runs the server using the configuration from `myfile.json`.
+The first command loads and verifies the configuration file without running the server.
+The second command runs the server using the configuration from `myfile.json`.
 
-# Configuration file
+# Configuration file example
 
 ```
 {
@@ -112,11 +116,11 @@ Examples:
                     , "describeFolders": false
                 }
                 , "hostnames": [
-                    { "name": "*", port: 80 }
-                    , { "name": "localhost", port: 80 }
-                    , { "name": "127.0.0.1", port: 80 }
-                    , { "name": "my-domain.com", port: 80 }
-                    , { "name": "www.my-domain.com", port: 80 }
+                    { "name": "*", port: 0 }
+                    , { "name": "localhost", port: 0 }
+                    , { "name": "127.0.0.1", port: 0 }
+                    , { "name": "my-domain.com", port: 0 }
+                    , { "name": "www.my-domain.com", port: 0 }
                 ]
             }
         ]
@@ -172,11 +176,11 @@ Examples:
 }
 ```
 
-In this example only one `site` was defined, running on the http and https standard `ports`. And all http clients an requests are served by `one single thread`.
+In this example only one `site` was defined, running on the http and https standard `ports`. And all http clients and requests are served by `one single thread`.
 
 # Contact
 
-Visit [mortegam.com](https://mortegam.com/) to see this project running a website on linux.
+Visit [mortegam.com](https://mortegam.com/) to see this project running a website on Linux.
 
 May you be surrounded by passionate and curious people. :-)
 
