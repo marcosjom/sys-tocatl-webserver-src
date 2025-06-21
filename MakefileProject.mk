@@ -31,7 +31,7 @@ NB_TARGET_TYPE              := static
 
 NB_TARGET_DEPENDS           := nbframework
 
-NB_TARGET_FLAGS_ENABLES     += NB_LIB_TOCATL
+NB_TARGET_FLAGS_ENABLES     += NB_LIB_TOCATL NB_LIB_SSL
 
 #-------------------------
 # CODE GRP

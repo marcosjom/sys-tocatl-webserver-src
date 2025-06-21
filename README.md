@@ -31,6 +31,8 @@ For simplicity, create this folder structure:
 
 You can create your own folders structure but it will require to update some paths in the projects and scripts.
 
+Follow the instructions in the `sys-nbframework-src/ext/*_howToBuild.txt` files to download the source of third-party embedded libraries. Optionally, these libraries can be dynamically linked to the ones installed in the operating system.
+
 The following steps will create and executable file.
 
 ## Windows
@@ -47,8 +49,11 @@ In a terminal:
 
 ```
 cd sys-tocatl-webserver-src
-make
+make tocatl
+make tocatl NB_LIB_SSL_SYSTEM=1
 ```
+
+The first `make` command will embed `openssl` into the executable from its source, the second will link to the `openssl` installed on the current system.
 
 Check each project's `Makefile` and `MakefileProject.mk` files, and the [MakefileFuncs.mk](https://github.com/marcosjom/sys-nbframework-src?tab=readme-ov-file#makefilefuncsmk) to understand the `make` process, including the accepted flags and targets.
 
