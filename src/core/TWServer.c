@@ -7,6 +7,7 @@
 
 #include "nb/NBFrameworkPch.h"
 #include "core/TWServer.h"
+#include "core/base/TWMimeTypesDefaults.h"
 //
 #include "nb/core/NBStruct.h"
 #include "nb/core/NBThreadCond.h"
@@ -15,7 +16,6 @@
 #include "nb/core/NBEncoding.h"
 #include "nb/net/NBHttpService.h"
 #include "nb/net/NBHttpServiceRespLnk.h"
-
 
 //TWServerStatsFrame
 
@@ -246,7 +246,7 @@ BOOL TWServer_start(STTWServerRef ref){ //async
     return r;
 }
 
-void TWServer_printHttpStast_(const ENTWTimeframe iFrame, const SI64 secsRunning, STNBHttpStatsData* data);
+void TWServer_printHttpStats_(const ENTWTimeframe iFrame, const SI64 secsRunning, STNBHttpStatsData* data);
 
 BOOL TWServer_execute(STTWServerRef ref, const UI64 msToRun){ //blocking
     BOOL r = FALSE;
@@ -318,7 +318,7 @@ BOOL TWServer_execute(STTWServerRef ref, const UI64 msToRun){ //blocking
                                     const UI64 newFrameStart = TWTimeframe_getBaseTimestamp((ENTWTimeframe)i, opq->cfg.stats.atom, timestamp);
                                     if (f->frameStart != newFrameStart) {
                                         //print frame-stats
-                                        TWServer_printHttpStast_((ENTWTimeframe)i, secsRunning , &f->data);
+                                        TWServer_printHttpStats_((ENTWTimeframe)i, secsRunning , &f->data);
                                         //reset frame-data
                                         NBStruct_stRelease(NBHttpStatsData_getSharedStructMap(), &f->data, sizeof(f->data));
                                         f->frameStart = newFrameStart;
@@ -341,7 +341,7 @@ BOOL TWServer_execute(STTWServerRef ref, const UI64 msToRun){ //blocking
     return r;
 }
 
-void TWServer_printHttpStast_(const ENTWTimeframe iFrame, const SI64 secsRunning, STNBHttpStatsData* data) {
+void TWServer_printHttpStats_(const ENTWTimeframe iFrame, const SI64 secsRunning, STNBHttpStatsData* data) {
     const STNBEnumMap* enMap = TWTimeframe_getSharedEnumMap();
     BOOL elemsCount = 0;
     STNBString str;
@@ -432,8 +432,14 @@ void TWServer_httpCltDisconnected_(STNBHttpServiceRef srv, const UI32 port, STNB
 
 typedef struct STTWServerFileResp_ {
     STNBFileRef file;           //opened file
-    SI64 contentLenght;         //len when response started
-    SI64 contentSent;           //len already sent
+    STNBString  filePathName;   //includes path and name
+    SI64        contentLenght;  //len when response started
+    SI64        contentSent;    //len already sent
+    //cfgs
+    struct {
+        STTWCfgWebPath* path;   //path's config
+        STTWCfgWebPath* def;    //default config
+    } cfgs;
     //read
     struct {
         SI32 iCsmd;             //consumed index (iCsmd <= iFilled)
@@ -691,6 +697,12 @@ BOOL TWServer_httpCltReqArrived_(STNBHttpServiceRef srv, const UI32 port, STNBHt
                             } else {
                                 STTWServerFileResp* resp = NBMemory_allocType(STTWServerFileResp);
                                 TWServerFileResp_init(resp);
+                                //
+                                if(site != NULL){
+                                    resp->cfgs.path = site->path;
+                                    resp->cfgs.def  = opq->cfg.web.defaults;
+                                }
+                                //
                                 {
                                     STNBString filepath;
                                     NBString_init(&filepath);
@@ -730,6 +742,7 @@ BOOL TWServer_httpCltReqArrived_(STNBHttpServiceRef srv, const UI32 port, STNBHt
                                                             itf.httpReqOwnershipEnded = TWServerFileResp_httpReqOwnershipEnded_file_;
                                                             itf.httpReqConsumeBodyEnd = TWServerFileResp_httpReqConsumeBodyEnd_file_;
                                                             itf.httpReqTick = TWServerFileResp_httpReqTick_file_;
+                                                            NBString_setBytes(&resp->filePathName, pathTmp.str, pathTmp.length);
                                                             PRINTF_INFO("TWServer, defaultDoc found: '%s'.\n", pathTmp.str);
                                                             if(!NBHttpServiceReqArrivalLnk_setOwner(&reqLnk, &itf, resp, 0)){
                                                                 r = NBHttpServiceReqArrivalLnk_setDefaultResponseCode(&reqLnk, 500, "Internal error, req-not-owned")
@@ -865,6 +878,7 @@ BOOL TWServer_httpCltReqArrived_(STNBHttpServiceRef srv, const UI32 port, STNBHt
                                             itf.httpReqOwnershipEnded = TWServerFileResp_httpReqOwnershipEnded_file_;
                                             itf.httpReqConsumeBodyEnd = TWServerFileResp_httpReqConsumeBodyEnd_file_;
                                             itf.httpReqTick = TWServerFileResp_httpReqTick_file_;
+                                            NBString_setBytes(&resp->filePathName, filepath.str, filepath.length);
                                             if(!NBHttpServiceReqArrivalLnk_setOwner(&reqLnk, &itf, resp, 0)){
                                                 r = NBHttpServiceReqArrivalLnk_setDefaultResponseCode(&reqLnk, 500, "Internal error, req-not-owned")
                                                 && NBHttpServiceReqArrivalLnk_setDefaultResponseBodyStr(&reqLnk, "Internal error, req-not-owned");
@@ -936,9 +950,11 @@ BOOL TWServer_httpCltReqArrived_(STNBHttpServiceRef srv, const UI32 port, STNBHt
 void TWServerFileResp_init(STTWServerFileResp* obj){
     NBMemory_setZeroSt(*obj, STTWServerFileResp);
     obj->file = NBFile_alloc(NULL);
+    NBString_initWithSz(&obj->filePathName, 0, 128, 0.1f);
 }
 
 void TWServerFileResp_release(STTWServerFileResp* obj){
+    NBString_release(&obj->filePathName);
     {
         NBFile_close(obj->file);
         NBFile_release(&obj->file);
@@ -1012,13 +1028,50 @@ BOOL TWServerFileResp_httpReqConsumeBodyEnd_file_(const STNBHttpServiceRespCtx c
                 PRINTF_ERROR("TWServerFileResp, NBFile_seek(ENNBFileRelative_Start) failed.\n");
                 r = FALSE;
             } else {
+                const char* extWithDot = NULL;
+                const char* mimeType = NULL;
                 NBASSERT(resp->contentSent == 0)
                 resp->contentSent = 0;
                 resp->contentLenght = fileSz;
+                //extWithDot
+                if(resp->filePathName.length > 0){
+                    const SI32 lastDotPos = NBString_lastIndexOf(&resp->filePathName, ".", resp->filePathName.length - 1);
+                    if(lastDotPos >= 0){
+                        extWithDot = &resp->filePathName.str[lastDotPos];
+                    }
+                }
+                //search mime-type
+                if(extWithDot != NULL){
+                    BOOL ignoreDefaultsMime = FALSE;
+                    //path's config
+                    if(mimeType == NULL && resp->cfgs.path != NULL && resp->cfgs.path->mimeTypes != NULL){
+                        const STTWCfgMimeType* type = TWCfgMimeTypes_getTypeByExt(resp->cfgs.path->mimeTypes, extWithDot);
+                        if(type != NULL){
+                            mimeType = type->mime;
+                        }
+                        ignoreDefaultsMime = (ignoreDefaultsMime || resp->cfgs.path->mimeTypes->ignoreDefaults);
+                    }
+                    //default's config
+                    if(mimeType == NULL && resp->cfgs.def != NULL && resp->cfgs.def->mimeTypes != NULL){
+                        const STTWCfgMimeType* type = TWCfgMimeTypes_getTypeByExt(resp->cfgs.def->mimeTypes, extWithDot);
+                        if(type != NULL){
+                            mimeType = type->mime;
+                        }
+                        ignoreDefaultsMime = (ignoreDefaultsMime || resp->cfgs.def->mimeTypes->ignoreDefaults);
+                    }
+                    //defaults values (hardcoded)
+                    if(mimeType == NULL && !ignoreDefaultsMime){
+                        mimeType = TWMimeTypesDefaults_getByExt(extWithDot);
+                    }
+                }
                 //send header
                 if(!NBHttpServiceRespLnk_setResponseCode(&ctx.resp.lnk, 200, "OK")){
                     //something went wrong
                     PRINTF_ERROR("TWServerFileResp, NBHttpServiceRespLnk_setResponseCode failed.\n");
+                    r = FALSE;
+                } else if(mimeType != NULL && NBHttpServiceRespLnk_setContentType(&ctx.resp.lnk, mimeType)){
+                    //something went wrong
+                    PRINTF_ERROR("TWServerFileResp, NBHttpServiceRespLnk_setContentType('%s') failed.\n", mimeType);
                     r = FALSE;
                 } else if(!NBHttpServiceRespLnk_setContentLength(&ctx.resp.lnk, (UI64)fileSz)){
                     //something went wrong

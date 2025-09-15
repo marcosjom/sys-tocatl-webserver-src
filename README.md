@@ -55,7 +55,7 @@ make tocatl NB_LIB_SSL_SYSTEM=1
 
 The first `make` command will embed `openssl` into the executable from its source, the second will link to the `openssl` installed on the current system.
 
-Check each project's `Makefile` and `MakefileProject.mk` files, and the [MakefileFuncs.mk](https://github.com/marcosjom/sys-nbframework-src?tab=readme-ov-file#makefilefuncsmk) to understand the `make` process, including the accepted flags and targets.
+Check each project's `Makefile` and `MakefileProject.mk` files, and the [MakefileFuncs.mk](https://github.com/marcosjom/makefile-like-IDE) to understand the `make` process, including the accepted flags and targets.
 
 # How to run
 

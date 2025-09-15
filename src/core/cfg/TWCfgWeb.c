@@ -63,6 +63,7 @@ const STNBStructMap* TWCfgWebPath_getSharedStructMap(void){
         //members
         NBStructMap_addStrPtrM(map, s, root); //website root-path (final slash will be automatically removed, empty root is automatically replaced to ".")
         NBStructMap_addStructPtrM(map, s, chars, TWCfgWebPathChars_getSharedStructMap());
+        NBStructMap_addStructPtrM(map, s, mimeTypes, TWCfgMimeTypes_getSharedStructMap());
         NBStructMap_addPtrToArrayOfStrPtrM(map, s, defaultDocs, defaultDocsSz, ENNBStructMapSign_Unsigned);
         NBStructMap_addBoolM(map, s, describeFolders); //if TRUE, when a folder path was not served, return the content/files of the folder (security risk).
         //

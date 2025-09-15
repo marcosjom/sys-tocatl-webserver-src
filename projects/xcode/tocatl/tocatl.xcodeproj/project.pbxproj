@@ -27,6 +27,10 @@
 		2C3CD63F28F7590200D27B5F /* TWCfgWeb.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C3CD63D28F7590200D27B5F /* TWCfgWeb.c */; };
 		2C3CD64028F7590200D27B5F /* TWCfgWeb.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C3CD63E28F7590200D27B5F /* TWCfgWeb.h */; };
 		2C4260602745835100963949 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C42605F2745835100963949 /* main.c */; };
+		2C4CC38C2E7867C000A5E1E4 /* TWCfgMimeTypes.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C4CC38B2E7867C000A5E1E4 /* TWCfgMimeTypes.c */; };
+		2C4CC38D2E7867C000A5E1E4 /* TWCfgMimeTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C4CC38A2E7867C000A5E1E4 /* TWCfgMimeTypes.h */; };
+		2C4CC3902E786B1400A5E1E4 /* TWMimeTypesDefaults.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C4CC38F2E786B1400A5E1E4 /* TWMimeTypesDefaults.c */; };
+		2C4CC3912E786B1400A5E1E4 /* TWMimeTypesDefaults.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C4CC38E2E786B1400A5E1E4 /* TWMimeTypesDefaults.h */; };
 		2C6700C32751490A007F07E5 /* TWStrs.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C6700C12751490A007F07E5 /* TWStrs.h */; };
 		2C6700C42751490A007F07E5 /* TWStrs.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C6700C22751490A007F07E5 /* TWStrs.c */; };
 		2CD6159528F09DB30058F91E /* TWCfgContext.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CD6159328F09DB30058F91E /* TWCfgContext.c */; };
@@ -80,6 +84,10 @@
 		2C3CD63E28F7590200D27B5F /* TWCfgWeb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TWCfgWeb.h; sourceTree = "<group>"; };
 		2C42605C2745835100963949 /* tocatl-test-old-clt */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "tocatl-test-old-clt"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C42605F2745835100963949 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
+		2C4CC38A2E7867C000A5E1E4 /* TWCfgMimeTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TWCfgMimeTypes.h; sourceTree = "<group>"; };
+		2C4CC38B2E7867C000A5E1E4 /* TWCfgMimeTypes.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = TWCfgMimeTypes.c; sourceTree = "<group>"; };
+		2C4CC38E2E786B1400A5E1E4 /* TWMimeTypesDefaults.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TWMimeTypesDefaults.h; sourceTree = "<group>"; };
+		2C4CC38F2E786B1400A5E1E4 /* TWMimeTypesDefaults.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = TWMimeTypesDefaults.c; sourceTree = "<group>"; };
 		2C6700C12751490A007F07E5 /* TWStrs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TWStrs.h; sourceTree = "<group>"; };
 		2C6700C22751490A007F07E5 /* TWStrs.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = TWStrs.c; sourceTree = "<group>"; };
 		2C6700C527514A3C007F07E5 /* TWStrTemplate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TWStrTemplate.h; sourceTree = "<group>"; };
@@ -146,6 +154,8 @@
 				2C3CD63D28F7590200D27B5F /* TWCfgWeb.c */,
 				2C06516F27503F640030BA06 /* TWCfg.h */,
 				2C06517027503F640030BA06 /* TWCfg.c */,
+				2C4CC38A2E7867C000A5E1E4 /* TWCfgMimeTypes.h */,
+				2C4CC38B2E7867C000A5E1E4 /* TWCfgMimeTypes.c */,
 			);
 			path = cfg;
 			sourceTree = "<group>";
@@ -198,6 +208,8 @@
 				2C6700C22751490A007F07E5 /* TWStrs.c */,
 				2C12B9A82752E68F00263206 /* TWTimeframes.h */,
 				2C12B9A92752E68F00263206 /* TWTimeframes.c */,
+				2C4CC38E2E786B1400A5E1E4 /* TWMimeTypesDefaults.h */,
+				2C4CC38F2E786B1400A5E1E4 /* TWMimeTypesDefaults.c */,
 			);
 			path = base;
 			sourceTree = "<group>";
@@ -255,10 +267,12 @@
 			files = (
 				2C3CD64028F7590200D27B5F /* TWCfgWeb.h in Headers */,
 				2CD6159628F09DB30058F91E /* TWCfgContext.h in Headers */,
+				2C4CC3912E786B1400A5E1E4 /* TWMimeTypesDefaults.h in Headers */,
 				2C12B9A52752CB7F00263206 /* TWReportBldr.h in Headers */,
 				2C06517127503F640030BA06 /* TWCfg.h in Headers */,
 				2CD6159A28F09F200058F91E /* TWContext.h in Headers */,
 				2C12B9992752A17900263206 /* TWStatsTraffic.h in Headers */,
+				2C4CC38D2E7867C000A5E1E4 /* TWCfgMimeTypes.h in Headers */,
 				2CD64E9C27582DFE00117A53 /* TWCfgStats.h in Headers */,
 				2C12B9A12752CB6E00263206 /* TWReport.h in Headers */,
 				2C065186275046040030BA06 /* TWServer.h in Headers */,
@@ -379,11 +393,13 @@
 				2CD6159928F09F200058F91E /* TWContext.c in Sources */,
 				2CD64E9D27582DFE00117A53 /* TWCfgStats.c in Sources */,
 				2C12B9A22752CB6E00263206 /* TWReport.c in Sources */,
+				2C4CC38C2E7867C000A5E1E4 /* TWCfgMimeTypes.c in Sources */,
 				2C12B9AB2752E68F00263206 /* TWTimeframes.c in Sources */,
 				2C6700C42751490A007F07E5 /* TWStrs.c in Sources */,
 				2C06517227503F640030BA06 /* TWCfg.c in Sources */,
 				2C3CD63F28F7590200D27B5F /* TWCfgWeb.c in Sources */,
 				2C12B9A62752CB7F00263206 /* TWReportBldr.c in Sources */,
+				2C4CC3902E786B1400A5E1E4 /* TWMimeTypesDefaults.c in Sources */,
 				2CD6159528F09DB30058F91E /* TWCfgContext.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

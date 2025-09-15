@@ -52,6 +52,7 @@ NB_CODE_GRP_SRCS            := \
     src/core/TWContext.c \
     src/core/base/TWTimeframes.c \
     src/core/base/TWStrs.c \
+    src/core/base/TWMimeTypesDefaults.c \
     src/core/stats/TWStatsTraffic.c \
     src/core/cfg/TWCfgStats.c \
     src/core/cfg/TWCfg.c \

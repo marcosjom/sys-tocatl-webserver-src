@@ -10,6 +10,7 @@
 
 #include "nb/core/NBStructMap.h"
 #include "core/cfg/TWCfgWeb.h"
+#include "core/cfg/TWCfgMimeTypes.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -39,6 +40,7 @@ const STNBStructMap* TWCfgWebPathChars_getSharedStructMap(void);
 typedef struct STTWCfgWebPath_ {
     char*                   root;               //website root-path (final slash will be automatically removed, empty root is automatically replaced to ".")
     STTWCfgWebPathChars*    chars;
+    STTWCfgMimeTypes*       mimeTypes;          //mime-types config
     char**                  defaultDocs;        //filenames to add if folder is provided (like "index.html" or "main.html")
     UI32                    defaultDocsSz;
     BOOL                    describeFolders;    //if TRUE, when a folder path was not served, return the content/files of the folder (security risk).
