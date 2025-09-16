@@ -17,7 +17,7 @@ extern "C" {
 //STTWCfgMimeType
 
 typedef struct STTWCfgMimeType_ {
-    char* ext;  //extension (including dot, like ".php" or ".")
+    char* ext;  //extension (without dot, like "php" or "zip")
     char* mime; //mime-type (like "application/octet-stream")
 } STTWCfgMimeType;
     
@@ -33,7 +33,7 @@ typedef struct STTWCfgMimeTypes_ {
     
 const STNBStructMap* TWCfgMimeTypes_getSharedStructMap(void);
 
-const STTWCfgMimeType* TWCfgMimeTypes_getTypeByExt(const STTWCfgMimeTypes* types, const char* extWithDot);
+const STTWCfgMimeType* TWCfgMimeTypes_getTypeByExt(const STTWCfgMimeTypes* types, const char* extNoDot);
 
 #ifdef __cplusplus
 } //extern "C"

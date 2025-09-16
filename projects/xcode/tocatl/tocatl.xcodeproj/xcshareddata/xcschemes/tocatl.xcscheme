@@ -36,7 +36,7 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
       useCustomWorkingDirectory = "YES"
-      customWorkingDirectory = "/Users/mortegam/Desktop/NIBSA_proyectos/CltSonoc/sys-cleanaudio/sys-cleanaudio-res/"
+      customWorkingDirectory = "/Volumes/MacSSD_HFS/NIBSA_proyectos/CltMarcosOrtega/sys-web-mortegam/sys-web-mortegam-res/"
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
@@ -61,7 +61,7 @@
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "/Users/mortegam/Desktop/NIBSA_proyectos/CltMarcosOrtega/sys-web-mortegam/sys-web-mortegam-res/tocatl.cfg.server.json"
+            argument = "/Volumes/MacSSD_HFS/NIBSA_proyectos/CltMarcosOrtega/sys-web-mortegam/tocatl.cfg.server.json"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument

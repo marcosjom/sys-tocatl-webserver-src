@@ -50,13 +50,13 @@ const STNBStructMap* TWCfgMimeTypes_getSharedStructMap(void){
     return TWCfgMimeTypes_sharedStructMap.map;
 }
 
-const STTWCfgMimeType* TWCfgMimeTypes_getTypeByExt(const STTWCfgMimeTypes* types, const char* extWithDot){
+const STTWCfgMimeType* TWCfgMimeTypes_getTypeByExt(const STTWCfgMimeTypes* types, const char* extNoDot){
     const STTWCfgMimeType* r = NULL;
-    if(types != NULL && types->typesSz > 0 && types->types != NULL && extWithDot != NULL && extWithDot[0] != '\0'){
+    if(types != NULL && types->typesSz > 0 && types->types != NULL && extNoDot != NULL && extNoDot[0] != '\0'){
         const STTWCfgMimeType* t = types->types;
         const STTWCfgMimeType* tAfterEnd = t + types->typesSz;
         while(t < tAfterEnd){
-            if(NBString_strIsLike(t->ext, extWithDot)){
+            if(NBString_strIsLike(t->ext, extNoDot)){
                 r = t;
                 break;
             }

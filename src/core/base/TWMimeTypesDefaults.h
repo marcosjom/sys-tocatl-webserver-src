@@ -14,7 +14,7 @@
 extern "C" {
 #endif
 
-const char* TWMimeTypesDefaults_getByExt(const char* extWithDot);
+const char* TWMimeTypesDefaults_getByExt(const char* extNoDot);
 
 #ifdef __cplusplus
 } //extern "C"

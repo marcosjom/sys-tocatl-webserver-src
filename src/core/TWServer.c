@@ -1028,40 +1028,44 @@ BOOL TWServerFileResp_httpReqConsumeBodyEnd_file_(const STNBHttpServiceRespCtx c
                 PRINTF_ERROR("TWServerFileResp, NBFile_seek(ENNBFileRelative_Start) failed.\n");
                 r = FALSE;
             } else {
-                const char* extWithDot = NULL;
+                const char* extNoDot = NULL;
                 const char* mimeType = NULL;
                 NBASSERT(resp->contentSent == 0)
                 resp->contentSent = 0;
                 resp->contentLenght = fileSz;
-                //extWithDot
+                //extNoDot
                 if(resp->filePathName.length > 0){
                     const SI32 lastDotPos = NBString_lastIndexOf(&resp->filePathName, ".", resp->filePathName.length - 1);
                     if(lastDotPos >= 0){
-                        extWithDot = &resp->filePathName.str[lastDotPos];
+                        extNoDot = &resp->filePathName.str[lastDotPos + 1];
                     }
                 }
                 //search mime-type
-                if(extWithDot != NULL){
+                if(extNoDot != NULL){
                     BOOL ignoreDefaultsMime = FALSE;
+                    //PRINTF_INFO("Extension: '%s'.\n", extNoDot);
                     //path's config
                     if(mimeType == NULL && resp->cfgs.path != NULL && resp->cfgs.path->mimeTypes != NULL){
-                        const STTWCfgMimeType* type = TWCfgMimeTypes_getTypeByExt(resp->cfgs.path->mimeTypes, extWithDot);
+                        const STTWCfgMimeType* type = TWCfgMimeTypes_getTypeByExt(resp->cfgs.path->mimeTypes, extNoDot);
                         if(type != NULL){
+                            //PRINTF_INFO("Mime-type: '%s' (by path's cfg).\n", type->mime);
                             mimeType = type->mime;
                         }
                         ignoreDefaultsMime = (ignoreDefaultsMime || resp->cfgs.path->mimeTypes->ignoreDefaults);
                     }
                     //default's config
                     if(mimeType == NULL && resp->cfgs.def != NULL && resp->cfgs.def->mimeTypes != NULL){
-                        const STTWCfgMimeType* type = TWCfgMimeTypes_getTypeByExt(resp->cfgs.def->mimeTypes, extWithDot);
+                        const STTWCfgMimeType* type = TWCfgMimeTypes_getTypeByExt(resp->cfgs.def->mimeTypes, extNoDot);
                         if(type != NULL){
+                            //PRINTF_INFO("Mime-type: '%s' (by default's cfg).\n", type->mime);
                             mimeType = type->mime;
                         }
                         ignoreDefaultsMime = (ignoreDefaultsMime || resp->cfgs.def->mimeTypes->ignoreDefaults);
                     }
                     //defaults values (hardcoded)
                     if(mimeType == NULL && !ignoreDefaultsMime){
-                        mimeType = TWMimeTypesDefaults_getByExt(extWithDot);
+                        mimeType = TWMimeTypesDefaults_getByExt(extNoDot);
+                        //PRINTF_INFO("Mime-type: '%s' (by default types).\n", mimeType);
                     }
                 }
                 //send header
@@ -1069,7 +1073,7 @@ BOOL TWServerFileResp_httpReqConsumeBodyEnd_file_(const STNBHttpServiceRespCtx c
                     //something went wrong
                     PRINTF_ERROR("TWServerFileResp, NBHttpServiceRespLnk_setResponseCode failed.\n");
                     r = FALSE;
-                } else if(mimeType != NULL && NBHttpServiceRespLnk_setContentType(&ctx.resp.lnk, mimeType)){
+                } else if(mimeType != NULL && !NBHttpServiceRespLnk_setContentType(&ctx.resp.lnk, mimeType)){
                     //something went wrong
                     PRINTF_ERROR("TWServerFileResp, NBHttpServiceRespLnk_setContentType('%s') failed.\n", mimeType);
                     r = FALSE;
