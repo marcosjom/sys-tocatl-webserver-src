@@ -55,6 +55,7 @@ NB_CODE_GRP_SRCS            := \
     src/core/base/TWMimeTypesDefaults.c \
     src/core/stats/TWStatsTraffic.c \
     src/core/cfg/TWCfgStats.c \
+    src/core/cfg/TWCfgMimeTypes.c \
     src/core/cfg/TWCfg.c \
     src/core/cfg/TWCfgWeb.c \
     src/core/reports/TWReport.c \
