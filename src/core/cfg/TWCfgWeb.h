@@ -9,6 +9,7 @@
 #define TWCfgWeb_h
 
 #include "nb/core/NBStructMap.h"
+#include "nb/net/NBHttpCfg.h"
 #include "core/cfg/TWCfgWeb.h"
 #include "core/cfg/TWCfgMimeTypes.h"
 
@@ -51,8 +52,9 @@ const STNBStructMap* TWCfgWebPath_getSharedStructMap(void);
 //TWCfgHostname
 
 typedef struct STTWCfgHostPort_ {
-    char*         name;     //hostname (like: '127.0.0.1', 'localhost' or 'my.host.com'; '*' means 'any')
-    UI16          port;     //port of the server (like: '80' or '443'; '0' means 'all ports')
+    char*         name;             //hostname (like: '127.0.0.1', 'localhost' or 'my.host.com'; '*' means 'any')
+    UI32          port;             //port of the server (like: '80' or '443'; '0' means 'all ports')
+    STNBHttpRedirectCfg* redirect;  //if present, requested URL will be presented as moved-to.
 } STTWCfgHostPort;
 
 const STNBStructMap* TWCfgHostPort_getSharedStructMap(void);

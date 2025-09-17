@@ -11,9 +11,9 @@ Built on top of [sys-nbframework-src](https://github.com/marcosjom/sys-nbframewo
 # Features
 
 - io-events driven implementation, one or few threads can handle many requests with concurrency.
-- SSL (HTTPS) support.
+- HTTPS/SSL support.
 - muti-domains support.
-- redirection support.
+- port-level and domain-level redirection support.
 - automatic folder's files listing support.
 - compiled for Windows, Mac, Linux.
 
@@ -116,14 +116,14 @@ The second command runs the server using the configuration from `myfile.json`.
                 "path": {
                     "root": "folder_path_to_this_website"
                     , "defaultDocs": ["index.html"]
-                    , "describeFolders": false
+                    , "describeFolders": true
                 }
                 , "hostnames": [
-                    { "name": "*", port: 0 }
-                    , { "name": "localhost", port: 0 }
-                    , { "name": "127.0.0.1", port: 0 }
-                    , { "name": "my-domain.com", port: 0 }
-                    , { "name": "www.my-domain.com", port: 0 }
+                    { "name": "*" }
+                    , { "name": "localhost" }
+                    , { "name": "127.0.0.1" }
+                    , { "name": "my-domain.com", "redirect": {"protocol": "https", "host": "www.my-domain.com" } }
+                    , { "name": "www.my-domain.com" }
                 ]
             }
         ]
@@ -147,6 +147,10 @@ The second command runs the server using the configuration from `myfile.json`.
                     }
                 }
                 , "ssl": { "isDisabled": true }
+                , "redirect": {
+                    "protocol": "https"
+                    , "port": 443
+                }
             }
             , {
                 "isDisabled": false
@@ -179,7 +183,15 @@ The second command runs the server using the configuration from `myfile.json`.
 }
 ```
 
-In this example only one `site` was defined, running on the http and https standard `ports`. And all http clients and requests are served by `one single thread`.
+In this example:
+ - one `website` folder was defined.
+ - both `http` and `https` standard ports are listened.
+ - all connections and requests are served by one `single thread`.
+ - requests made to the `http` port will be redirected to `https`.
+ - requests made to `my-domain.com` will be redirected to `https://www.my-domain.com`.
+ - requests made to a folder path (ending with '/' or not):
+   - will serve the `index.html` file, if it exists inside that folder.
+   - otherwise, will generate a html response listing all the files in that folder.
 
 # Contact
 

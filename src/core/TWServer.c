@@ -506,7 +506,9 @@ BOOL TWServer_httpCltReqArrived_(STNBHttpServiceRef srv, const UI32 port, STNBHt
             {
                 BOOL doResponse = TRUE;
                 //search for rule
+                
                 const STTWCfgWebSite* site  = NULL;
+                const STTWCfgHostPort* host = NULL;
                 const char* pathRoot        = NULL;
                 const STTWCfgWebPathChars* chars = NULL;
                 const STTWCfgWebPathRuleChars* black = NULL;
@@ -580,6 +582,7 @@ BOOL TWServer_httpCltReqArrived_(STNBHttpServiceRef srv, const UI32 port, STNBHt
                                         {
                                             //apply rules
                                             site = site2;
+                                            host = host2;
                                             if(site->path != NULL){
                                                 const STTWCfgWebPath* path = site2->path;
                                                 if(path->root != NULL){
@@ -687,6 +690,70 @@ BOOL TWServer_httpCltReqArrived_(STNBHttpServiceRef srv, const UI32 port, STNBHt
                                     NBString_concatByte(&filteredAbsPath, '/');
                                 }
                             }
+                        }
+                        //domain-level redirection
+                        if(doResponse && host != NULL && host->redirect != NULL && host->redirect->protocol != NULL){
+                            UI32 redirErrCode = 0;
+                            STNBString redirLoc;
+                            NBString_initWithSz(&redirLoc, 0, 128, 0.10f);
+                            //protocol
+                            NBString_concat(&redirLoc, host->redirect->protocol);
+                            NBString_concat(&redirLoc, "://");
+                            //host
+                            if(host->redirect->host != NULL){
+                                //explicit redirect host
+                                NBString_concat(&redirLoc, host->redirect->host);
+                            } else {
+                                //implicit redirect host (host header)
+                                const char* hostFld = NBHttpHeader_getField(reqDesc.header, "host");
+                                if(hostFld == NULL){
+                                    //error
+                                    redirErrCode = 400;
+                                    r = NBHttpServiceReqArrivalLnk_setDefaultResponseCode(&reqLnk, redirErrCode, "Host-header is required")
+                                        && NBHttpServiceReqArrivalLnk_setDefaultResponseBodyStr(&reqLnk, "Host-header is required");
+                                    doResponse = FALSE;
+                                } else {
+                                    UI32 hostLen = 0;
+                                    //parse 'host' field
+                                    const UI32 hostFldLen = NBString_strLenBytes(hostFld);
+                                    SI32 iPortPos = NBString_strLastIndexOf(hostFld, ":", hostFldLen - 1);
+                                    if(iPortPos < 0){
+                                        hostLen = hostFldLen;
+                                    } else {
+                                        hostLen = iPortPos;
+                                    }
+                                    if(hostLen == 0){
+                                        //error
+                                        redirErrCode = 400;
+                                        r = NBHttpServiceReqArrivalLnk_setDefaultResponseCode(&reqLnk, redirErrCode, "Empty host-header")
+                                            && NBHttpServiceReqArrivalLnk_setDefaultResponseBodyStr(&reqLnk, "Empty host-header");
+                                        doResponse = FALSE;
+                                    } else {
+                                        NBString_concatBytes(&redirLoc, hostFld, hostLen);
+                                    }
+                                }
+                            }
+                            //complete
+                            if(redirErrCode == 0){
+                                //port
+                                if(host->redirect->port > 0){
+                                    NBString_concatByte(&redirLoc, ':');
+                                    NBString_concatUI32(&redirLoc, host->redirect->port);
+                                }
+                                //target
+                                NBString_concatBytes(&redirLoc, absPath.str, absPath.length);
+                                NBString_concatBytes(&redirLoc, query.str, query.length);
+                                NBString_concatBytes(&redirLoc, fragment.str, fragment.length);
+                                //
+                                r = NBHttpServiceReqArrivalLnk_setDefaultResponseCode(&reqLnk, 301, "Moved Permanently")
+                                    && NBHttpServiceReqArrivalLnk_setDefaultResponseBodyStr(&reqLnk, "Moved Permanently")
+                                    && NBHttpServiceReqArrivalLnk_setDefaultResponseField(&reqLnk, "Location", redirLoc.str);
+                                //
+                                //PRINTF_INFO("Redirecting from port(%d) to '%s'.\n", port, redirLoc.str);
+                                doResponse = FALSE;
+                            }
+                            //
+                            NBString_release(&redirLoc);
                         }
                         //search for file
                         if(doResponse){

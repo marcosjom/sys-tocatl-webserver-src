@@ -86,6 +86,7 @@ const STNBStructMap* TWCfgHostPort_getSharedStructMap(void){
         //members
         NBStructMap_addStrPtrM(map, s, name);   //hostname ('*' means 'all')
         NBStructMap_addUIntM(map, s, port);     //port of the server ('0' means 'all')
+        NBStructMap_addStructPtrM(map, s, redirect, NBHttpRedirectCfg_getSharedStructMap()); //if present, requested URL will be presented as moved-to.
         //
         TWCfgHostPort_sharedStructMap.map = map;
     }
