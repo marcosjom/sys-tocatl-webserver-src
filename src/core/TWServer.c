@@ -518,7 +518,7 @@ BOOL TWServer_httpCltReqArrived_(STNBHttpServiceRef srv, const UI32 port, STNBHt
                 BOOL  describeFolders = FALSE;
                 //
                 STNBString filteredAbsPath;
-                NBString_initWithSz(&filteredAbsPath, 0, 64, 0.10f);
+                NBString_initWithSz(&filteredAbsPath, 0, 128, 0.10f);
                 //select default rules for path
                 {
                     if(opq->cfg.web.defaults != NULL){
@@ -742,18 +742,153 @@ BOOL TWServer_httpCltReqArrived_(STNBHttpServiceRef srv, const UI32 port, STNBHt
                                 }
                                 //target
                                 NBString_concatBytes(&redirLoc, absPath.str, absPath.length);
-                                NBString_concatBytes(&redirLoc, query.str, query.length);
-                                NBString_concatBytes(&redirLoc, fragment.str, fragment.length);
+                                if(query.length > 0){
+                                    NBString_concatByte(&redirLoc, '?');
+                                    NBString_concatBytes(&redirLoc, query.str, query.length);
+                                }
+                                if(fragment.length > 0){
+                                    NBString_concatByte(&redirLoc, '#');
+                                    NBString_concatBytes(&redirLoc, fragment.str, fragment.length);
+                                }
                                 //
                                 r = NBHttpServiceReqArrivalLnk_setDefaultResponseCode(&reqLnk, 301, "Moved Permanently")
                                     && NBHttpServiceReqArrivalLnk_setDefaultResponseBodyStr(&reqLnk, "Moved Permanently")
                                     && NBHttpServiceReqArrivalLnk_setDefaultResponseField(&reqLnk, "Location", redirLoc.str);
                                 //
-                                //PRINTF_INFO("Redirecting from port(%d) to '%s'.\n", port, redirLoc.str);
+                                //PRINTF_INFO("Redirecting from port(%d) res('%s%s%s%s%s') to '%s'.\n", port, absPath.str, query.length > 0 ? "?" : "", query.str, fragment.length > 0 ? "#" : "", fragment.str, redirLoc.str);
                                 doResponse = FALSE;
                             }
                             //
                             NBString_release(&redirLoc);
+                        }
+                        //default-doc redirection ("/path/index.html" -> "/path/")
+                        if(doResponse && host != NULL && defaultDocs != NULL && defaultDocsSz > 0){
+                            const SI32 iLastSlash = NBString_lastIndexOf(&filteredAbsPath, "/", filteredAbsPath.length - 1);
+                            if(iLastSlash >= 0 && (iLastSlash + 1) < filteredAbsPath.length){
+                                BOOL isDefDocMatch = FALSE;
+                                //analyze if requested file would match a default-doc result
+                                {
+                                    const char* lstFile = &filteredAbsPath.str[iLastSlash + 1];
+                                    STNBString pathTmp;
+                                    NBString_init(&pathTmp);
+                                    SI32 i; for(i = 0; i < defaultDocsSz; ++i){
+                                        if(NBString_strIsEqual(lstFile, defaultDocs[i])){
+                                            //default-doc match
+                                            STNBFileRef file = NBFile_alloc(NULL);
+                                            //build file-path
+                                            {
+                                                UI32 absPathStart = 0;
+                                                NBString_set(&pathTmp, pathRoot); NBASSERT(pathTmp.length > 0)
+                                                if(pathTmp.str[pathTmp.length - 1] == '/' && filteredAbsPath.str[0] == '/'){
+                                                    //ignore starting-slash if root-path already ends with an slash.
+                                                    absPathStart = 1;
+                                                }
+                                                NBString_concatBytes(&pathTmp, &filteredAbsPath.str[absPathStart], iLastSlash + 1 - absPathStart);
+                                                NBString_concat(&pathTmp, defaultDocs[i]);
+                                            }
+                                            //search file
+                                            if(NBFile_open(file, pathTmp.str, ENNBFileMode_Read)){
+                                                //requested default-doc exists
+                                                //analyze if a previous default-doc would have priority over this one.
+                                                isDefDocMatch = TRUE;
+                                                --i; for(; i >= 0 && isDefDocMatch; --i){
+                                                    STNBFileRef file = NBFile_alloc(NULL);
+                                                    //build file-path
+                                                    {
+                                                        UI32 absPathStart = 0;
+                                                        NBString_set(&pathTmp, pathRoot); NBASSERT(pathTmp.length > 0)
+                                                        if(pathTmp.str[pathTmp.length - 1] == '/' && filteredAbsPath.str[0] == '/'){
+                                                            //ignore starting-slash if root-path already ends with an slash.
+                                                            absPathStart = 1;
+                                                        }
+                                                        NBString_concatBytes(&pathTmp, &filteredAbsPath.str[absPathStart], iLastSlash + 1 - absPathStart);
+                                                        NBString_concat(&pathTmp, defaultDocs[i]);
+                                                    }
+                                                    //search file
+                                                    if(NBFile_open(file, pathTmp.str, ENNBFileMode_Read)){
+                                                        //do not redirect to folder path, because another default-doc would be server.
+                                                        //keep current default-doc as the explicit requested document.
+                                                        isDefDocMatch = FALSE;
+                                                    }
+                                                    NBFile_release(&file);
+                                                    NBFile_null(&file);
+                                                }
+                                            }
+                                            NBFile_release(&file);
+                                            NBFile_null(&file);
+                                            break;
+                                        }
+                                    }
+                                    NBString_release(&pathTmp);
+                                }
+                                //redirect by removing default-doc from path
+                                if(isDefDocMatch){
+                                    const BOOL isSslEnabled = NBHttpServiceConn_isSslEnabled(conn);
+                                    UI32 redirErrCode = 0;
+                                    STNBString redirLoc;
+                                    NBString_initWithSz(&redirLoc, 0, 128, 0.10f);
+                                    //protocol
+                                    NBString_concat(&redirLoc, isSslEnabled ? "https" : "http");
+                                    NBString_concat(&redirLoc, "://");
+                                    //host
+                                    {
+                                        const char* hostFld = NBHttpHeader_getField(reqDesc.header, "host");
+                                        if(hostFld == NULL){
+                                            //error
+                                            redirErrCode = 400;
+                                            r = NBHttpServiceReqArrivalLnk_setDefaultResponseCode(&reqLnk, redirErrCode, "Host-header is required")
+                                                && NBHttpServiceReqArrivalLnk_setDefaultResponseBodyStr(&reqLnk, "Host-header is required");
+                                            doResponse = FALSE;
+                                        } else {
+                                            UI32 hostLen = 0;
+                                            //parse 'host' field
+                                            const UI32 hostFldLen = NBString_strLenBytes(hostFld);
+                                            SI32 iPortPos = NBString_strLastIndexOf(hostFld, ":", hostFldLen - 1);
+                                            if(iPortPos < 0){
+                                                hostLen = hostFldLen;
+                                            } else {
+                                                hostLen = iPortPos;
+                                            }
+                                            if(hostLen == 0){
+                                                //error
+                                                redirErrCode = 400;
+                                                r = NBHttpServiceReqArrivalLnk_setDefaultResponseCode(&reqLnk, redirErrCode, "Empty host-header")
+                                                    && NBHttpServiceReqArrivalLnk_setDefaultResponseBodyStr(&reqLnk, "Empty host-header");
+                                                doResponse = FALSE;
+                                            } else {
+                                                NBString_concatBytes(&redirLoc, hostFld, hostLen);
+                                            }
+                                        }
+                                    }
+                                    //complete
+                                    if(redirErrCode == 0){
+                                        //port
+                                        if(port != (isSslEnabled ? 443 : 80)){
+                                            NBString_concatByte(&redirLoc, ':');
+                                            NBString_concatUI32(&redirLoc, port);
+                                        }
+                                        //target
+                                        NBString_concatBytes(&redirLoc, filteredAbsPath.str, iLastSlash + 1); //just up to the last slash
+                                        if(query.length > 0){
+                                            NBString_concatByte(&redirLoc, '?');
+                                            NBString_concatBytes(&redirLoc, query.str, query.length);
+                                        }
+                                        if(fragment.length > 0){
+                                            NBString_concatByte(&redirLoc, '#');
+                                            NBString_concatBytes(&redirLoc, fragment.str, fragment.length);
+                                        }
+                                        //
+                                        r = NBHttpServiceReqArrivalLnk_setDefaultResponseCode(&reqLnk, 301, "Moved Permanently")
+                                            && NBHttpServiceReqArrivalLnk_setDefaultResponseBodyStr(&reqLnk, "Moved Permanently")
+                                            && NBHttpServiceReqArrivalLnk_setDefaultResponseField(&reqLnk, "Location", redirLoc.str);
+                                        //
+                                        //PRINTF_INFO("Redirecting from port(%d) res('%s%s%s%s%s') to '%s'.\n", port, absPath.str, query.length > 0 ? "?" : "", query.str, fragment.length > 0 ? "#" : "", fragment.str, redirLoc.str);
+                                        doResponse = FALSE;
+                                    }
+                                    //
+                                    NBString_release(&redirLoc);
+                                }
+                            }
                         }
                         //search for file
                         if(doResponse){
@@ -800,7 +935,7 @@ BOOL TWServer_httpCltReqArrived_(STNBHttpServiceRef srv, const UI32 port, STNBHt
                                                         }
                                                         NBString_concat(&pathTmp, defDoc);
                                                         if(!NBFile_open(resp->file, pathTmp.str, ENNBFileMode_Read)){
-                                                            PRINTF_INFO("TWServer, defaultDoc not found: '%s'.\n", pathTmp.str);
+                                                            //PRINTF_INFO("TWServer, defaultDoc not found: '%s'.\n", pathTmp.str);
                                                             NBFile_release(&resp->file);
                                                             resp->file = NBFile_alloc(NULL);
                                                         } else {
@@ -810,7 +945,7 @@ BOOL TWServer_httpCltReqArrived_(STNBHttpServiceRef srv, const UI32 port, STNBHt
                                                             itf.httpReqConsumeBodyEnd = TWServerFileResp_httpReqConsumeBodyEnd_file_;
                                                             itf.httpReqTick = TWServerFileResp_httpReqTick_file_;
                                                             NBString_setBytes(&resp->filePathName, pathTmp.str, pathTmp.length);
-                                                            PRINTF_INFO("TWServer, defaultDoc found: '%s'.\n", pathTmp.str);
+                                                            //PRINTF_INFO("TWServer, defaultDoc found: '%s'.\n", pathTmp.str);
                                                             if(!NBHttpServiceReqArrivalLnk_setOwner(&reqLnk, &itf, resp, 0)){
                                                                 r = NBHttpServiceReqArrivalLnk_setDefaultResponseCode(&reqLnk, 500, "Internal error, req-not-owned")
                                                                 && NBHttpServiceReqArrivalLnk_setDefaultResponseBodyStr(&reqLnk, "Internal error, req-not-owned");
@@ -924,20 +1059,82 @@ BOOL TWServer_httpCltReqArrived_(STNBHttpServiceRef srv, const UI32 port, STNBHt
                                             }
                                         } else if(NBFilesystem_folderExists(&opq->fs, filepath.str)){
                                             //redirect to folfer-path (add '/')
-                                            STNBString pathTmp;
-                                            NBString_init(&pathTmp);
-                                            NBString_concat(&pathTmp, reqDesc.firstLine.target);
-                                            NBString_concatByte(&pathTmp, '/');
+                                            const BOOL isSslEnabled = NBHttpServiceConn_isSslEnabled(conn);
+                                            UI32 redirErrCode = 0;
+                                            STNBString redirLoc;
+                                            NBString_initWithSz(&redirLoc, 0, 128, 0.10f);
+                                            //protocol
+                                            NBString_concat(&redirLoc, isSslEnabled ? "https" : "http");
+                                            NBString_concat(&redirLoc, "://");
+                                            //host
                                             {
+                                                const char* hostFld = NBHttpHeader_getField(reqDesc.header, "host");
+                                                if(hostFld == NULL){
+                                                    //error
+                                                    redirErrCode = 400;
+                                                    r = NBHttpServiceReqArrivalLnk_setDefaultResponseCode(&reqLnk, redirErrCode, "Host-header is required")
+                                                        && NBHttpServiceReqArrivalLnk_setDefaultResponseBodyStr(&reqLnk, "Host-header is required");
+                                                    //consume
+                                                    TWServerFileResp_release(resp);
+                                                    NBMemory_free(resp);
+                                                    resp = NULL;
+                                                } else {
+                                                    UI32 hostLen = 0;
+                                                    //parse 'host' field
+                                                    const UI32 hostFldLen = NBString_strLenBytes(hostFld);
+                                                    SI32 iPortPos = NBString_strLastIndexOf(hostFld, ":", hostFldLen - 1);
+                                                    if(iPortPos < 0){
+                                                        hostLen = hostFldLen;
+                                                    } else {
+                                                        hostLen = iPortPos;
+                                                    }
+                                                    if(hostLen == 0){
+                                                        //error
+                                                        redirErrCode = 400;
+                                                        r = NBHttpServiceReqArrivalLnk_setDefaultResponseCode(&reqLnk, redirErrCode, "Empty host-header")
+                                                            && NBHttpServiceReqArrivalLnk_setDefaultResponseBodyStr(&reqLnk, "Empty host-header");
+                                                        //consume
+                                                        TWServerFileResp_release(resp);
+                                                        NBMemory_free(resp);
+                                                        resp = NULL;
+                                                    } else {
+                                                        NBString_concatBytes(&redirLoc, hostFld, hostLen);
+                                                    }
+                                                }
+                                            }
+                                            //complete
+                                            if(redirErrCode == 0){
+                                                //port
+                                                if(port != (isSslEnabled ? 443 : 80)){
+                                                    NBString_concatByte(&redirLoc, ':');
+                                                    NBString_concatUI32(&redirLoc, port);
+                                                }
+                                                //target
+                                                NBString_concat(&redirLoc, filteredAbsPath.str);
+                                                //concat slash '/'
+                                                NBString_concatByte(&redirLoc, '/');
+                                                //
+                                                if(query.length > 0){
+                                                    NBString_concatByte(&redirLoc, '?');
+                                                    NBString_concatBytes(&redirLoc, query.str, query.length);
+                                                }
+                                                if(fragment.length > 0){
+                                                    NBString_concatByte(&redirLoc, '#');
+                                                    NBString_concatBytes(&redirLoc, fragment.str, fragment.length);
+                                                }
+                                                //
                                                 r = NBHttpServiceReqArrivalLnk_setDefaultResponseCode(&reqLnk, 301, "Moved Permanently")
                                                     && NBHttpServiceReqArrivalLnk_setDefaultResponseBodyStr(&reqLnk, "Moved Permanently, redirecting to folder path.")
-                                                    && NBHttpServiceReqArrivalLnk_setDefaultResponseField(&reqLnk, "Location", pathTmp.str);
+                                                    && NBHttpServiceReqArrivalLnk_setDefaultResponseField(&reqLnk, "Location", redirLoc.str);
+                                                //
+                                                PRINTF_INFO("Redirecting from port(%d) res('%s%s%s%s%s') to '%s'.\n", port, absPath.str, query.length > 0 ? "?" : "", query.str, fragment.length > 0 ? "#" : "", fragment.str, redirLoc.str);
                                                 //consume
                                                 TWServerFileResp_release(resp);
                                                 NBMemory_free(resp);
                                                 resp = NULL;
                                             }
-                                            NBString_release(&pathTmp);
+                                            //
+                                            NBString_release(&redirLoc);
                                         } else if(NBFile_open(resp->file, filepath.str, ENNBFileMode_Read)){
                                             //file-found
                                             STNBHttpServiceReqLstnrItf itf;
