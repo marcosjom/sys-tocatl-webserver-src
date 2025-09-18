@@ -15,6 +15,11 @@ Built on top of [sys-nbframework-src](https://github.com/marcosjom/sys-nbframewo
 - muti-domains support.
 - port-level and domain-level redirection support.
 - automatic folder's files listing support.
+- SEO-friendly redirections by config:
+   - port-level redirection (80 -> 443, or http -> https)
+   - domain-level redirection (my-domain.com -> www.my-domain.com)
+   - folder-level redirection (/my-folder-url -> /my-folder-url/)
+   - default-doc-level redirection (my-url/index.html -> my-url/)
 - compiled for Windows, Mac, Linux.
 
 # How to compile
